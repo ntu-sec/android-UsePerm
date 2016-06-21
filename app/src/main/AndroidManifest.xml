@@ -5,6 +5,7 @@
     android:versionName="1.0">
 
     <uses-permission android:name="sg.edu.ntu.testperm.simpleprovider.perm1" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -19,6 +20,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <receiver android:name=".MyReceiver">
+            <intent-filter>
+                <action android:name="sg.edu.ntu.user.MYINTENT" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

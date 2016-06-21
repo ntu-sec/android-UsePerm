@@ -4,5 +4,6 @@
     <string name="app_name">TestCPUser</string>
     <string name="menu_settings">Settings</string>
     <string name="display_names">Display names</string>
+    <string name="sendintent">sendIntent</string>
 
 </resources>

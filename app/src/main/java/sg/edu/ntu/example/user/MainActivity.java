@@ -1,16 +1,21 @@
 package sg.edu.ntu.example.user;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<Cursor> {
     public static final String TAG = MainActivity.class.getSimpleName();
@@ -64,4 +69,14 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         super.onDestroy();
     }
 
+    public void onClickdSendIntent(View view) {
+        String perm = Manifest.permission.READ_PHONE_STATE;
+//        if (ContextCompat.checkSelfPermission(this, perm) == PackageManager.PERMISSION_GRANTED) {
+            Intent intent = new Intent();
+            intent.setAction("sg.edu.ntu.testperm.MYINTENT");
+            sendBroadcast(intent);
+//        } else {
+//            Toast.makeText(this, "no perm: " + perm, Toast.LENGTH_SHORT).show();
+//        }
+    }
 }
