@@ -19,9 +19,16 @@
         android:ems="10"/>
 
     <Button
-        android:id="@+id/btnSendIntent"
+        android:id="@+id/btnIntentBroadCast"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:onClick="onClickdSendIntent"
-        android:text="@string/sendintent" />
+        android:onClick="onClickedIntentBroadCast"
+        android:text="@string/intent_broadcast" />
+
+    <Button
+        android:id="@+id/btnIntentStartActivity"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickedIntentStartActivity"
+        android:text="@string/intent_activity" />
 </LinearLayout>
