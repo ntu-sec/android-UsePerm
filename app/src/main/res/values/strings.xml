@@ -7,5 +7,8 @@
     <string name="sendintent">sendIntent</string>
     <string name="intent_broadcast">intent BroadCast</string>
     <string name="intent_activity">intent activity</string>
+    <string name="intent_service">intent service</string>
+    <string name="start_camera">start Camera</string>
+    <string name="pick_contacts">pick contacts</string>
 
 </resources>

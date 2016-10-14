@@ -4,8 +4,11 @@
     android:versionCode="1"
     android:versionName="1.0">
 
+    <uses-permission android:name="sg.edu.ntu.testperm.perm1" />
+    <uses-permission android:name="sg.edu.ntu.testperm.perm2" />
     <uses-permission android:name="sg.edu.ntu.testperm.simpleprovider.perm1" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:allowBackup="true"

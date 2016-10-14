@@ -1,10 +1,15 @@
 package sg.edu.ntu.example.user;
 
 import android.Manifest;
+import android.content.ComponentName;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -18,6 +23,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     public static final String TAG = MainActivity.class.getSimpleName();
     public static final String DB_URI = "content://sg.edu.ntu.testperm.simpleprovider.MyProvider/cte";
     public static final int REQUEST_CODE = 1;
+    public static final int REQUEST_CAMERA = 2;
+    private static final int REQUEST_CONTACTS = 3;
     TextView resultView = null;
     CursorLoader cursorLoader;
 
@@ -87,6 +94,30 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
             } else {
                 Log.e(TAG, "resultCode=" + resultCode);
             }
+        } else if (requestCode == REQUEST_CAMERA && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            Log.i(TAG, imageBitmap != null ? imageBitmap.toString() : null);
+        } else if (requestCode == REQUEST_CONTACTS && resultCode == RESULT_OK) {
+            int myID = 1;
+            Uri contactData = data.getData();
+            Cursor cur = managedQuery(contactData, null, null, null, null);
+            ContentResolver cr = getContentResolver();
+            if (Integer.parseInt(cur.getString(
+                    cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
+                Cursor pCur = cr.query(
+                        ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                        null,
+                        ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
+                        new String[]{String.valueOf(myID)}, null);
+                assert pCur != null;
+                while (pCur.moveToNext()) {
+                    String name = cur.getString(cur.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME));
+                    Log.i(TAG, "get the name: " + name);
+                    // Do something with phones
+                }
+                pCur.close();
+            }
         } else {
             Log.i(TAG, "requestCode=" + requestCode);
         }
@@ -96,5 +127,28 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         Intent intent = new Intent();
         intent.setAction("sg.edu.ntu.testperm.MYINTENT2");
         startActivityForResult(intent, REQUEST_CODE);
+    }
+
+    public void onClickedIntentStartService(View view) {
+        Intent intent = new Intent();
+        Log.i(TAG, "xxx " + android.os.Process.myPid());
+        intent.putExtra("PackageNameInfo", getPackageName());
+        Log.i(TAG, "data=" + intent.getStringExtra("PackageNameInfo"));
+        intent.setComponent(new ComponentName("sg.edu.ntu.testperm", "sg.edu.ntu.testperm.simpleservice.SimpleService"));
+        startService(intent);
+    }
+
+    public void onClickedIntentStartCamera(View view) {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_CAMERA);
+        } else {
+            Log.i(TAG, "cannot resolve");
+        }
+    }
+
+    public void onClickedIntentStartContact(View view) {
+        Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+        startActivityForResult(intent, REQUEST_CONTACTS);
     }
 }

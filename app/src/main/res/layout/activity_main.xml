@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:clickable="false"
-        android:ems="10"/>
+        android:ems="10" />
 
     <Button
         android:id="@+id/btnIntentBroadCast"
@@ -31,4 +31,25 @@
         android:layout_height="wrap_content"
         android:onClick="onClickedIntentStartActivity"
         android:text="@string/intent_activity" />
+
+    <Button
+        android:id="@+id/btnIntentStartCamera"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickedIntentStartCamera"
+        android:text="@string/start_camera" />
+
+    <Button
+        android:id="@+id/btnIntentContact"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickedIntentStartContact"
+        android:text="@string/pick_contacts" />
+
+    <Button
+        android:id="@+id/btnIntentStartService"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickedIntentStartService"
+        android:text="@string/intent_service" />
 </LinearLayout>
